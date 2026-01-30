@@ -1,5 +1,6 @@
 import java.util.Scanner;
 
+// UC8: Final Modular OOPS-Compliant Hazard Analyzer
 public class FactoryRobotHazardAnalyzer {
     public static void main(String[] args) {
         System.out.println("Factory Robot Hazard Analyzer");
@@ -29,5 +30,44 @@ public class FactoryRobotHazardAnalyzer {
         }
 
         scanner.close();
+    }
+
+    // Encapsulated Business Logic Class
+    static class RobotHazardAuditor {
+        public double CalculateHazardRisk(double armPrecision, int workerDensity, String machineryState) throws RobotSafetyException {
+            if (armPrecision < 0.0 || armPrecision > 1.0) {
+                throw new RobotSafetyException("Error: Arm precision must be 0.0-1.0");
+            }
+            if (workerDensity < 1 || workerDensity > 20) {
+                throw new RobotSafetyException("Error: Worker density must be 1-20");
+            }
+            if (!machineryState.equals("Worn") && !machineryState.equals("Faulty") && !machineryState.equals("Critical")) {
+                throw new RobotSafetyException("Error: Unsupported machinery state");
+            }
+
+            double machineRiskFactor = 0.0;
+            switch (machineryState) {
+                case "Worn": 
+                    machineRiskFactor = 1.3; 
+                    break;
+                case "Faulty": 
+                    machineRiskFactor = 2.0; 
+                    break;
+                case "Critical": 
+                    machineRiskFactor = 3.0; 
+                    break;
+                default:
+                    throw new RobotSafetyException("Error: Unsupported machinery state");
+            }
+
+            return ((1.0 - armPrecision) * 15.0) + (workerDensity * machineRiskFactor);
+        }
+    }
+
+    // Custom Exception Class
+    static class RobotSafetyException extends Exception {
+        public RobotSafetyException(String message) {
+            super(message);
+        }
     }
 }
