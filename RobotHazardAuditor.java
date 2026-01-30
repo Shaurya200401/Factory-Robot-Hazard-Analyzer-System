@@ -22,6 +22,8 @@ public class RobotHazardAuditor {
             case "Critical":
                 machineRiskFactor = 3.0;
                 break;
+            default:
+                throw new RobotSafetyException("Error: Unsupported machinery state");
         }
 
         return ((1.0 - armPrecision) * 15.0) + (workerDensity * machineRiskFactor);
