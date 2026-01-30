@@ -20,12 +20,12 @@ public class FactoryRobotHazardAnalyzer {
         System.out.println("Worker Density: " + workerDensity);
         System.out.println("Machinery State: " + machineryState);
 
-        // UC5: Use Auditor
-        RobotHazardAuditor auditor = new RobotHazardAuditor();
-        double hazardRisk = auditor.CalculateHazardRisk(armPrecision, workerDensity, machineryState);
-
-        if (hazardRisk != -1.0) {
+        try {
+            RobotHazardAuditor auditor = new RobotHazardAuditor();
+            double hazardRisk = auditor.CalculateHazardRisk(armPrecision, workerDensity, machineryState);
             System.out.println("Hazard Risk Score: " + hazardRisk);
+        } catch (RobotSafetyException e) {
+            System.out.println(e.getMessage());
         }
 
         scanner.close();
